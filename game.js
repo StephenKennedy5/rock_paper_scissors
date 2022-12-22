@@ -18,50 +18,72 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    console.log(playerSelection,computerSelection);
     if (playerSelection === "Rock") {
         if (computerSelection === "Rock") {
             console.log(`It's a tie. ${playerSelection} ties ${computerSelection}.`);
+            return "Tie";
         } else if (computerSelection === "Scissors") {
             console.log(`You Win! ${playerSelection} beats ${computerSelection}.`);
+            return "Player"
         } else {
             console.log(`You Lose. ${computerSelection} beats ${playerSelection}.`);
+            return "Computer"
         }
     } else if (playerSelection === "Scissors") {
         if (computerSelection === "Scissors") {
             console.log(`It's a tie. ${playerSelection} ties ${computerSelection}.`);
+            return "Tie"
         } else if (computerSelection === "Paper") {
             console.log(`You Win! ${playerSelection} beats ${computerSelection}.`);
+            return "Player"
         } else {
             console.log(`You Lose. ${computerSelection} beats ${playerSelection}.`);
+            return "Computer"
         }
-    } else {
+    } else if (playerSelection === "Paper"){
         if (computerSelection === "Paper") {
             console.log(`It's a tie. ${playerSelection} ties ${computerSelection}.`);
+            return "Tie"
         } else if (computerSelection === "Rock") {
             console.log(`You Win! ${playerSelection} beats ${computerSelection}.`);
+            return "Player"
         } else {
             console.log(`You Lose. ${computerSelection} beats ${playerSelection}.`);
+            return "Computer"
         }
+    } else {
+        console.log("Player did not make a move.")
     }
 
 }
 
 function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    let tieScore = 0;
     for (let i = 0; i < 5; i++) {
-        let userprompt = prompt("Want to play a game? Choose Rock, Paper, or Scissors. \nTo stop playing type Quit or Exit.");
+        let userprompt = prompt(`Want to play a game? Choose Rock, Paper, or Scissors.\nThe Score is ${playerScore}-${computerScore}-${tieScore} \nTo stop playing type Quit or Exit.`);
         let playerSelection = userprompt.charAt(0).toUpperCase() + userprompt.slice(1).toLocaleLowerCase();
         let computerSelection = getComputerChoice();
 
         if (playerSelection === "Rock" || playerSelection === "Paper" || playerSelection === "Scissors") {
-            console.log(playRound(playerSelection,computerSelection));
+            var outcome = playRound(playerSelection,computerSelection);
         } else if (playerSelection === "Quit" || playerSelection === "Exit") {
             break;
         } else {
-
+            let userprompt = prompt("You did not choose a proper choice for the game. \nPlease choose Rock, Paper, or Scissors.");
+            let playerSelection = userprompt.charAt(0).toUpperCase() + userprompt.slice(1).toLocaleLowerCase();
+            console.log(playRound(playerSelection,computerSelection));
         }
-
+        if (outcome === "Tie") {
+            tieScore++;
+        } else if (outcome === "Player") {
+            playerScore++;
+        } else {
+            computerScore++;
+        }
     }
+    console.log(`Final Score: Player - ${playerScore}, Computer - ${computerScore}, Ties - ${tieScore}`)
 }
 
 game();
