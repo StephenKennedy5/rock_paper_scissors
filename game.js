@@ -17,7 +17,7 @@ let tieScore = 0;
 
 buttons.forEach(button => button.addEventListener('click', function() {
     console.log(button.innerHTML);
-    console.log(game(button.innerHTML));
+    console.log(playRound(button.innerHTML));
 }))
 
 
@@ -38,50 +38,16 @@ function playRound(playerSelection) {
     let computerSelection = getComputerChoice();
     console.log(playerSelection,computerSelection)
     if (playerSelection === computerSelection) {
-        return "Tie";
+        update_score("Tie");
     } else if ((playerSelection === "Rock" && computerSelection === "Scissors") ||
                 (playerSelection === "Paper" && computerSelection === "Rock") ||
                 (playerSelection === "Scissors" && computerSelection === "Paper")) {
-                    return "Player";
+                    update_score("Player");
     }   else {
-        return "Computer";
+        update_score("Computer");
     }
 
-}
-
-// function game() {
-//     let playerScore = 0;
-//     let computerScore = 0;
-//     let tieScore = 0;
-//     for (let i = 0; i < 5; i++) {
-//         let userprompt = prompt(`Want to play a game? Choose Rock, Paper, or Scissors.\nThe Score is ${playerScore}-${computerScore}-${tieScore} \nTo stop playing type Quit or Exit.`);
-//         let playerSelection = userprompt.charAt(0).toUpperCase() + userprompt.slice(1).toLocaleLowerCase();
-//         let computerSelection = getComputerChoice();
-
-//         if (playerSelection === "Rock" || playerSelection === "Paper" || playerSelection === "Scissors") {
-//             var outcome = playRound(playerSelection,computerSelection);
-//         } else if (playerSelection === "Quit" || playerSelection === "Exit") {
-//             break;
-//         } else {
-//             let userprompt = prompt("You did not choose a proper choice for the game. \nPlease choose Rock, Paper, or Scissors.");
-//             let playerSelection = userprompt.charAt(0).toUpperCase() + userprompt.slice(1).toLocaleLowerCase();
-//             console.log(playRound(playerSelection,computerSelection));
-//         }
-//         if (outcome === "Tie") {
-//             tieScore++;
-//         } else if (outcome === "Player") {
-//             playerScore++;
-//         } else {
-//             computerScore++;
-//         }
-//     }
-//     console.log(`Final Score: Player - ${playerScore}, Computer - ${computerScore}, Ties - ${tieScore}`)
-// }
-
-function game(playerSelection) {
-    var outcome = playRound(playerSelection);
-    
-    update_score(outcome);
+    return
 }
 
 function update_score(outcome) {
@@ -102,15 +68,14 @@ function update_score(outcome) {
         } else {
             window.alert("Winner is CPU");
         }
-        tieScore = 0;
-        playerScore = 0;
-        computerScore = 0;
-        document.getElementById("score").innerHTML = `${playerScore} - ${computerScore} - ${tieScore}`;
+        restart_game();
     }
-
+    
 }
 
-
-
-
-// game();
+function restart_game() {
+    tieScore = 0;
+    playerScore = 0;
+    computerScore = 0;
+    document.getElementById("score").innerHTML = `${playerScore} - ${computerScore} - ${tieScore}`;
+}
